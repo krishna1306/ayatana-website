@@ -59,6 +59,14 @@ npm run preview
 
 Publishing is intentionally local: no GitHub Actions or deployment workflow is included. Build on `main`, then commit and push the generated `dist/` files as the complete contents of `website`. Never edit the generated files by hand.
 
+For routine publishing, run this one command from a clean `main` branch:
+
+```bash
+npm run publish:website
+```
+
+It runs the production build, creates a temporary detached worktree, replaces the generated files on the local `website` branch, and commits the change only if the output changed. It leaves your current branch on `main` and does not push. Review and publish the generated commit with `git push origin website`. To customize the generated commit message, use `npm run publish:website -- --message="Publish updated website"`.
+
 ### First publication
 
 First, commit and push the editable source on `main`:
@@ -90,7 +98,7 @@ Run the second command block only while creating or updating `website`; `git rm 
 
 ### Later publications
 
-After you update and push source changes on `main`, rebuild before switching branches, then replace the generated branch contents:
+After you update and push source changes on `main`, run `npm run publish:website`, review the resulting `website` commit, and push it with `git push origin website`. The manual procedure below is retained as a fallback:
 
 ```bash
 git switch main
