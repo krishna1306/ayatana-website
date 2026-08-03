@@ -80,13 +80,13 @@ Then create the generated `website` branch from the already-built `dist/` direct
 git switch --orphan website
 git rm -rf .
 cp -R dist/. .
-git add --all
+git add -f -- . ':!dist' ':!.astro' ':!node_modules'
 git commit -m "Publish website"
 git push -u origin website
 git switch main
 ```
 
-Run the second command block only while creating or updating `website`; `git rm -rf .` removes the branch's tracked files so that only generated output is committed. The ignored `dist/` directory remains available for the copy operation.
+Run the second command block only while creating or updating `website`; `git rm -rf .` removes the branch's tracked files so that only generated output is committed. The ignored `dist/` directory remains available for the copy operation. Because an orphan branch has no `.gitignore`, the explicit `git add` command excludes `dist/`, `.astro/`, and `node_modules/` while staging the generated files at the branch root.
 
 ### Later publications
 
@@ -106,7 +106,7 @@ git push origin main
 git switch website
 git rm -rf .
 cp -R dist/. .
-git add --all
+git add -f -- . ':!dist' ':!.astro' ':!node_modules'
 git commit -m "Publish website"
 git push origin website
 git switch main
