@@ -55,70 +55,36 @@ npm run audit
 npm run preview
 ```
 
-## Publishing to the `website` branch
+## Publish a website update
 
-Publishing is intentionally local: no GitHub Actions or deployment workflow is included. Build on `main`, then commit and push the generated `dist/` files as the complete contents of `website`. Never edit the generated files by hand.
+The editable source is on `main`; the generated static site is on the existing `website` branch. Stay on `main` throughout this workflow.
 
-For routine publishing, run this one command from a clean `main` branch:
-
-```bash
-npm run publish:website
-```
-
-It runs the production build, creates a temporary detached worktree, replaces the generated files on the local `website` branch, and commits the change only if the output changed. It leaves your current branch on `main` and does not push. Review and publish the generated commit with `git push origin website`. To customize the generated commit message, use `npm run publish:website -- --message="Publish updated website"`.
-
-### First publication
-
-First, commit and push the editable source on `main`:
+After changing the site, run:
 
 ```bash
-git switch main
-npm ci
 npm run check
-npm run build
-npm run audit
-git add .
-git commit -m "Initial Ayatana website"
-git push -u origin main
-```
-
-Then create the generated `website` branch from the already-built `dist/` directory:
-
-```bash
-git switch --orphan website
-git rm -rf .
-cp -R dist/. .
-git add -f -- . ':!dist' ':!.astro' ':!node_modules'
-git commit -m "Publish website"
-git push -u origin website
-git switch main
-```
-
-Run the second command block only while creating or updating `website`; `git rm -rf .` removes the branch's tracked files so that only generated output is committed. The ignored `dist/` directory remains available for the copy operation. Because an orphan branch has no `.gitignore`, the explicit `git add` command excludes `dist/`, `.astro/`, and `node_modules/` while staging the generated files at the branch root.
-
-### Later publications
-
-After you update and push source changes on `main`, run `npm run publish:website`, review the resulting `website` commit, and push it with `git push origin website`. The manual procedure below is retained as a fallback:
-
-```bash
-git switch main
-git pull --ff-only origin main
-npm ci
-npm run check
-npm run build
-npm run audit
 git add .
 git commit -m "Describe the source change"
 git push origin main
-
-git switch website
-git rm -rf .
-cp -R dist/. .
-git add -f -- . ':!dist' ':!.astro' ':!node_modules'
-git commit -m "Publish website"
+npm run publish:website
 git push origin website
-git switch main
 ```
+
+`npm run publish:website` builds the site, creates a commit on `website` only when the generated files changed, and keeps you on `main`. It requires a clean `main` branch, which is why it runs after the source commit. It does not push by itself; the final command publishes the generated commit.
+
+Use this once after cloning to install the exact project dependencies:
+
+```bash
+npm ci
+```
+
+To change the generated commit message:
+
+```bash
+npm run publish:website -- --message="Publish updated website"
+```
+
+Never edit `website` directly or merge it back into `main`.
 
 Configure the host to serve the `website` branch root. For GitHub Pages, select **Deploy from a branch**, then choose branch `website` and folder `/(root)`. If the production site is under a repository subpath rather than a custom domain, set Astro's `site` and `base` options in `astro.config.mjs` before publishing. The current configuration is appropriate for a custom domain or a branch-root deployment.
 
