@@ -59,7 +59,9 @@ npm run preview
 
 The editable source is on `main`; the generated static site is on the existing `website` branch. Stay on `main` throughout this workflow.
 
-After changing the site, run:
+When you push to `main`, GitHub Actions now runs the publish workflow automatically: it installs dependencies, runs `npm run check`, builds the site, updates `website`, and pushes `website` to `origin`.
+
+To publish manually from your machine (for example, to verify locally before automation), run:
 
 ```bash
 npm run check
