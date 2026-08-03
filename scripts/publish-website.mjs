@@ -8,7 +8,8 @@ const output = (command, args, options = {}) => execFileSync(command, args, { en
 const repoRoot = output("git", ["rev-parse", "--show-toplevel"]);
 const branch = output("git", ["branch", "--show-current"]);
 const status = output("git", ["status", "--porcelain"]);
-const message = process.env.npm_config_message || "Publish website";
+const messageArgument = process.argv.find((argument) => argument.startsWith("--message="));
+const message = messageArgument?.slice("--message=".length) || process.env.npm_config_message || "Publish website";
 
 if (branch !== "main") throw new Error("Run this command from the main branch.");
 if (status) throw new Error("Commit or stash all source changes before publishing.");
