@@ -1,0 +1,31 @@
+@import "tailwindcss";
+@source "../../node_modules/preline/dist/*.js";
+
+@theme {
+  --font-display: "DM Serif Display", Georgia, serif;
+  --font-body: "Work Sans", sans-serif;
+  --color-ink: #10211e;
+  --color-forest: #17483c;
+  --color-moss: #567761;
+  --color-sand: #f3efe6;
+  --color-cream: #fbfaf6;
+  --color-clay: #d4a269;
+  --color-line: #d7d8d0;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-body text-ink antialiased;
+  }
+
+  a,
+  button,
+  input,
+  textarea {
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest;
+  }
+}

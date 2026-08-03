@@ -1,0 +1,64 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { site } from "../content/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Ayatana | Facility Management Services" description={site.description}>
+  <Header />
+  <main>
+    <section class="relative overflow-hidden bg-sand">
+      <div class="absolute inset-y-0 right-0 hidden w-[42%] bg-forest lg:block"></div>
+      <div class="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.2fr_.8fr] lg:px-8 lg:py-28">
+        <div class="max-w-3xl">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">Facility management, considered</p>
+          <h1 class="mt-6 font-display text-5xl leading-[0.95] tracking-tight text-ink sm:text-7xl">Workplaces that simply work.</h1>
+          <p class="mt-8 max-w-xl text-lg leading-8 text-ink/75">Ayatana brings structure, care, and accountability to the day-to-day operations behind better workplaces.</p>
+          <div class="mt-10 flex flex-wrap gap-4">
+            <a href="/contact" class="rounded-full bg-forest px-6 py-3.5 font-semibold text-white transition hover:bg-ink">Talk to our team</a>
+            <a href="#services" class="rounded-full border border-forest px-6 py-3.5 font-semibold text-forest transition hover:bg-forest hover:text-white">Explore services</a>
+          </div>
+        </div>
+        <div class="relative min-h-80 overflow-hidden rounded-3xl bg-forest p-8 text-white shadow-xl shadow-forest/20 lg:mt-8">
+          <div class="absolute -right-20 -top-20 size-64 rounded-full border-[28px] border-clay/80"></div>
+          <div class="absolute -bottom-16 left-8 size-40 rounded-full bg-white/10"></div>
+          <div class="relative flex h-full flex-col justify-between">
+            <p class="max-w-xs text-sm leading-6 text-white/75">A reliable facility is rarely noticed. That is exactly the point.</p>
+            <div>
+              <p class="font-display text-6xl text-clay">Every day</p>
+              <p class="mt-2 text-sm font-semibold uppercase tracking-[0.15em]">Operational confidence</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+      <div class="max-w-2xl">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">What we manage</p>
+        <h2 class="mt-4 font-display text-4xl tracking-tight sm:text-5xl">The work behind a well-run workplace.</h2>
+      </div>
+      <div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
+        {site.services.map((service, index) => (
+          <article class="bg-cream p-8 transition hover:bg-sand">
+            <p class="text-sm font-bold text-clay">0{index + 1}</p>
+            <h3 class="mt-10 text-xl font-bold tracking-tight">{service.title}</h3>
+            <p class="mt-4 text-sm leading-6 text-ink/70">{service.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="bg-forest text-white">
+      <div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[.85fr_1.15fr] lg:px-8 lg:py-28">
+        <p class="font-display text-5xl leading-none text-clay sm:text-6xl">Care is an operating standard, not an add-on.</p>
+        <div class="max-w-xl lg:pt-3">
+          <p class="text-lg leading-8 text-white/80">From the visible welcome at reception to the systems running quietly in the background, we make each detail feel intentionally managed.</p>
+          <a href="/contact" class="mt-8 inline-flex rounded-full border border-white/40 px-6 py-3.5 font-semibold transition hover:border-white hover:bg-white hover:text-forest">Start a conversation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

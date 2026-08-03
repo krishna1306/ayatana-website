@@ -1,0 +1,27 @@
+---
+import { site } from "../content/site";
+---
+
+<footer class="bg-ink text-white">
+  <div class="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-[1.5fr_1fr_1fr] lg:px-8">
+    <div>
+      <a href="/" class="font-display text-4xl">Ayatana</a>
+      <p class="mt-5 max-w-sm text-sm leading-6 text-white/70">Practical facility management for workplaces that need to work, every day.</p>
+    </div>
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-clay">Navigate</p>
+      <ul class="mt-4 space-y-3">
+        {site.navigation.map((item) => <li><a href={item.href} class="text-sm text-white/75 transition hover:text-white">{item.label}</a></li>)}
+      </ul>
+    </div>
+    <div>
+      <p class="text-xs font-bold uppercase tracking-[0.18em] text-clay">Contact</p>
+      <address class="mt-4 space-y-3 text-sm not-italic text-white/75">
+        <p>{site.location}</p>
+        <p><a href={`mailto:${site.email}`} class="hover:text-white">{site.email}</a></p>
+        <p><a href={`tel:${site.phone.replaceAll(" ", "")}`} class="hover:text-white">{site.phone}</a></p>
+      </address>
+    </div>
+  </div>
+  <div class="border-t border-white/15 px-6 py-5 text-center text-xs text-white/55">© {new Date().getFullYear()} Ayatana. All rights reserved.</div>
+</footer>
