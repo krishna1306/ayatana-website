@@ -47,12 +47,11 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "";
   <Footer />
 </BaseLayout>
 
-<script>
+<script define:vars={{ apiUrl }}>
   const form = document.getElementById('consultation-form');
   const submitButton = document.getElementById('submit-button');
   const formMessage = document.getElementById('form-message');
   const successMessage = document.getElementById('success-message');
-  const formContainer = document.getElementById('form-container');
 
   if (form) {
     form.addEventListener('submit', async (e) => {
