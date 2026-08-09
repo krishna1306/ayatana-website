@@ -3,6 +3,7 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { site } from "../content/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
+const apiUrl = import.meta.env.PUBLIC_API_URL || "";
 ---
 
 <BaseLayout title="Request a Consultation | Ayatana" description="Request a consultation with Ayatana about your facility management needs.">
@@ -24,17 +25,88 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           <p><span class="block text-xs font-bold uppercase tracking-[0.16em] text-moss">Location</span><span class="mt-1 inline-block font-semibold">{site.location}</span></p>
         </address>
       </div>
-      <form action={`mailto:${site.email}`} method="post" enctype="text/plain" class="rounded-2xl border border-line bg-sand/50 p-6 sm:p-10">
-        <div class="grid gap-6 sm:grid-cols-2">
-          <label class="grid gap-2 text-sm font-semibold">Name<input required name="name" autocomplete="name" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
-          <label class="grid gap-2 text-sm font-semibold">Work email<input required type="email" name="email" autocomplete="email" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
+      <div id="form-container">
+        <form id="consultation-form" class="rounded-2xl border border-line bg-sand/50 p-6 sm:p-10">
+          <div class="grid gap-6 sm:grid-cols-2">
+            <label class="grid gap-2 text-sm font-semibold">Name<input required name="name" autocomplete="name" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
+            <label class="grid gap-2 text-sm font-semibold">Work email<input required type="email" name="email" autocomplete="email" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
+          </div>
+          <label class="mt-6 grid gap-2 text-sm font-semibold">Company<input name="company" autocomplete="organization" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
+          <label class="mt-6 grid gap-2 text-sm font-semibold">How can we help?<textarea required name="message" rows="6" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink"></textarea></label>
+          <input type="text" name="_website" tabindex="-1" autocomplete="off" style="display:none" />
+          <button type="submit" id="submit-button" class="mt-7 rounded-full bg-ink px-6 py-3.5 font-semibold text-white transition hover:bg-ink/85">Send consultation request</button>
+          <p id="form-message" class="mt-4 text-xs leading-5 text-ink/60"></p>
+        </form>
+        <div id="success-message" class="hidden rounded-2xl border border-line bg-sand/50 p-6 sm:p-10 text-center">
+          <p class="text-lg font-semibold text-ink">Thank you for your consultation request!</p>
+          <p class="mt-2 text-sm text-ink/70">We'll be in touch soon.</p>
         </div>
-        <label class="mt-6 grid gap-2 text-sm font-semibold">Company<input name="company" autocomplete="organization" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
-        <label class="mt-6 grid gap-2 text-sm font-semibold">How can we help?<textarea required name="message" rows="6" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink"></textarea></label>
-        <button type="submit" class="mt-7 rounded-full bg-ink px-6 py-3.5 font-semibold text-white transition hover:bg-ink/85">Send consultation request</button>
-        <p class="mt-4 text-xs leading-5 text-ink/60">Submitting opens your email app with your message addressed to Ayatana. Connect a form service before production if you need browser-based submissions.</p>
-      </form>
+      </div>
     </section>
   </main>
   <Footer />
 </BaseLayout>
+
+<script>
+  const form = document.getElementById('consultation-form');
+  const submitButton = document.getElementById('submit-button');
+  const formMessage = document.getElementById('form-message');
+  const successMessage = document.getElementById('success-message');
+  const formContainer = document.getElementById('form-container');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!apiUrl) {
+        formMessage.textContent = 'API URL not configured. Please contact support.';
+        formMessage.classList.add('text-red-600');
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = 'Sending...';
+      formMessage.textContent = '';
+      formMessage.classList.remove('text-red-600');
+
+      const formData = new FormData(form);
+      const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        company: formData.get('company'),
+        message: formData.get('message'),
+        _website: formData.get('_website')
+      };
+
+      try {
+        const response = await fetch(`${apiUrl}/api/consultations`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.status === 429) {
+          formMessage.textContent = 'Too many requests. Please try again later.';
+          formMessage.classList.add('text-red-600');
+          submitButton.disabled = false;
+          submitButton.textContent = 'Send consultation request';
+          return;
+        }
+
+        if (!response.ok) {
+          throw new Error('Failed to submit request');
+        }
+
+        form.classList.add('hidden');
+        successMessage.classList.remove('hidden');
+      } catch (error) {
+        formMessage.textContent = 'Failed to submit request. Please try again.';
+        formMessage.classList.add('text-red-600');
+        submitButton.disabled = false;
+        submitButton.textContent = 'Send consultation request';
+      }
+    });
+  }
+</script>

@@ -22,6 +22,7 @@ Ayatana is a static business website for a facility management services company.
 - npm 11 or newer
 - Git
 - Permission to push to both `main` and `website` on `origin`.
+- `PUBLIC_API_URL` environment variable configured (see below)
 
 ## Local development
 
@@ -38,6 +39,32 @@ npm run dev
 ```
 
 Astro prints the local address, normally `http://localhost:4321`.
+
+### Environment variables
+
+The consultation form requires the `PUBLIC_API_URL` environment variable to be set. This variable is baked into the static build at `astro build` time, so the website must be rebuilt and redeployed whenever the API URL changes.
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. Set the API URL in `.env`:
+   ```
+   PUBLIC_API_URL=https://your-api-url.com
+   ```
+
+For development with a local backend, you might use:
+```
+PUBLIC_API_URL=http://localhost:8000
+```
+
+For production, use the actual API endpoint URL, for example:
+```
+PUBLIC_API_URL=https://api.ayatana.org.in
+```
+
+**Important:** The `PUBLIC_API_URL` is compiled into the static build. When this value changes (e.g., ngrok URL rotation or production deployment), you must rebuild the site with `npm run build` and redeploy.
 
 ## Before sharing a change
 
@@ -97,7 +124,7 @@ and `base` options before publishing.
 ## Content and design maintenance
 
 - Update company facts and the service list in `src/content/site.ts` so shared components stay consistent.
-- Replace the placeholder contact details before launch. The contact form currently opens the visitor's email application via `mailto:`; it does not transmit data to a server. Use a vetted form provider or backend endpoint before relying on browser-based form submissions.
+- Replace the placeholder contact details before launch. The contact form submits to the Ayatana backend API via `PUBLIC_API_URL` (configured in `.env`). Ensure the API endpoint is rate-limited and secure before production use.
 - Add images to `public/images/` and reference them with root-relative paths, for example `/images/workplace.jpg`.
 - Keep all user-facing pages in `src/pages/` and reuse `BaseLayout`, `Header`, and `Footer` to retain metadata, navigation, accessibility behavior, and visual consistency.
 - Preline's JavaScript is initialized once from `BaseLayout.astro`. Use its documented components when interaction is needed instead of adding duplicate UI scripts.
