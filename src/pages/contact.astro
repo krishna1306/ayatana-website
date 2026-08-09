@@ -33,7 +33,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "";
           </div>
           <label class="mt-6 grid gap-2 text-sm font-semibold">Company<input name="company" autocomplete="organization" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink" /></label>
           <label class="mt-6 grid gap-2 text-sm font-semibold">How can we help?<textarea required name="message" rows="6" class="rounded-lg border border-line bg-white px-4 py-3 font-normal outline-none transition focus:border-ink"></textarea></label>
-          <input type="text" name="_website" tabindex="-1" autocomplete="off" style="display:none" />
+          <input type="text" name="website_honeypot" tabindex="-1" autocomplete="off" style="display:none" />
           <button type="submit" id="submit-button" class="mt-7 rounded-full bg-ink px-6 py-3.5 font-semibold text-white transition hover:bg-ink/85">Send consultation request</button>
           <p id="form-message" class="mt-4 text-xs leading-5 text-ink/60"></p>
         </form>
@@ -75,7 +75,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || "";
         email: formData.get('email'),
         company: formData.get('company'),
         message: formData.get('message'),
-        _website: formData.get('_website')
+        website_honeypot: formData.get('website_honeypot')
       };
 
       try {
