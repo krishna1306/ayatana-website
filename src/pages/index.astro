@@ -1,61 +1,91 @@
 ---
+import { BriefcaseBusiness, Building2, ConciergeBell, House, ShieldCheck, Sparkles } from "@lucide/astro";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { site } from "../content/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const serviceIcons = [BriefcaseBusiness, ShieldCheck, Sparkles];
+const industryIcons = [Building2, House, ConciergeBell];
 ---
 
 <BaseLayout title="Ayatana | Facility Management Services" description={site.description}>
   <Header />
   <main>
-    <section class="relative overflow-hidden bg-sand">
-      <div class="absolute inset-y-0 right-0 hidden w-[42%] bg-forest lg:block"></div>
-      <div class="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.2fr_.8fr] lg:px-8 lg:py-28">
+    <section class="relative isolate overflow-hidden bg-ink text-white">
+      <img src="/brand/ayatana_image.jpg" alt="Luxury apartment residences surrounded by mature greenery" class="absolute inset-0 size-full object-cover object-[60%_center]" />
+      <div class="absolute inset-0 bg-gradient-to-r from-ink/80 via-ink/55 to-ink/35 md:from-ink/80 md:via-ink/45 md:to-transparent"></div>
+      <div class="relative mx-auto flex min-h-[40rem] max-w-7xl items-end px-6 py-16 sm:min-h-[44rem] sm:py-20 lg:min-h-[calc(72vh-4.75rem)] lg:items-center lg:px-8 lg:py-28">
         <div class="max-w-3xl">
-          <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">Facility management, considered</p>
-          <h1 class="mt-6 font-display text-5xl leading-[0.95] tracking-tight text-ink sm:text-7xl">Workplaces that simply work.</h1>
-          <p class="mt-8 max-w-xl text-lg leading-8 text-ink/75">Ayatana brings structure, care, and accountability to the day-to-day operations behind better workplaces.</p>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-clay">Ayatana facility management</p>
+          <h1 class="mt-6 font-display text-5xl leading-[0.95] tracking-tight sm:text-7xl">Luxury living. Thoughtfully managed.</h1>
+          <p class="mt-8 max-w-xl text-lg leading-8 text-white/80">Ayatana brings structure, care, and accountability to the day-to-day operations behind better commercial, residential, and hospitality spaces.</p>
           <div class="mt-10 flex flex-wrap gap-4">
-            <a href="/contact" class="rounded-full bg-forest px-6 py-3.5 font-semibold text-white transition hover:bg-ink">Talk to our team</a>
-            <a href="#services" class="rounded-full border border-forest px-6 py-3.5 font-semibold text-forest transition hover:bg-forest hover:text-white">Explore services</a>
-          </div>
-        </div>
-        <div class="relative min-h-80 overflow-hidden rounded-3xl bg-forest p-8 text-white shadow-xl shadow-forest/20 lg:mt-8">
-          <div class="absolute -right-20 -top-20 size-64 rounded-full border-[28px] border-clay/80"></div>
-          <div class="absolute -bottom-16 left-8 size-40 rounded-full bg-white/10"></div>
-          <div class="relative flex h-full flex-col justify-between">
-            <p class="max-w-xs text-sm leading-6 text-white/75">A reliable facility is rarely noticed. That is exactly the point.</p>
-            <div>
-              <p class="font-display text-6xl text-clay">Every day</p>
-              <p class="mt-2 text-sm font-semibold uppercase tracking-[0.15em]">Operational confidence</p>
-            </div>
+            <a href="/contact" class="rounded-full bg-cream px-6 py-3.5 font-semibold text-ink transition hover:bg-white">Request a consultation</a>
+            <a href="#services" class="rounded-full border border-white/65 px-6 py-3.5 font-semibold text-white transition hover:border-white hover:bg-white hover:text-ink">Explore services</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="services" class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
-      <div class="max-w-2xl">
-        <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">What we manage</p>
-        <h2 class="mt-4 font-display text-4xl tracking-tight sm:text-5xl">The work behind a well-run workplace.</h2>
+    <section id="services" class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">What we provide</p>
+          <h2 class="mt-4 font-display text-4xl leading-[1.02] tracking-tight sm:text-5xl">Service, made to feel effortless.</h2>
+        </div>
+        <p class="max-w-xl text-base leading-7 text-ink/70 lg:justify-self-start">The people and standards behind spaces that operate beautifully, every day.</p>
       </div>
-      <div class="mt-12 grid gap-px overflow-hidden rounded-2xl border border-line bg-line md:grid-cols-3">
-        {site.services.map((service, index) => (
-          <article class="bg-cream p-8 transition hover:bg-sand">
-            <p class="text-sm font-bold text-clay">0{index + 1}</p>
-            <h3 class="mt-10 text-xl font-bold tracking-tight">{service.title}</h3>
-            <p class="mt-4 text-sm leading-6 text-ink/70">{service.description}</p>
-          </article>
-        ))}
+      <div class="mt-10 grid border-y border-line md:grid-cols-3">
+        {site.services.map((service, index) => {
+          const Icon = serviceIcons[index];
+          return (
+            <article class:list={["group flex min-h-64 flex-col p-8", index < site.services.length - 1 ? "border-b border-line md:border-r md:border-b-0" : ""]}>
+              <Icon size={34} stroke-width={1.25} aria-hidden="true" class="text-clay" />
+              <div class="mt-8">
+                <h3 class="text-2xl font-semibold tracking-tight">{service.title}</h3>
+                <div class="mt-4 h-px w-10 bg-line transition-all duration-300 group-hover:w-full"></div>
+                <p class="mt-4 max-w-xs text-sm leading-6 text-ink/70">{service.description}</p>
+              </div>
+            </article>
+          );
+        })}
       </div>
     </section>
 
-    <section class="bg-forest text-white">
+    <section id="industries" class="overflow-hidden bg-ink text-white">
+      <div class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+        <div class="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-[0.2em] text-clay">Industries we serve</p>
+            <h2 class="mt-4 font-display text-4xl leading-[1.02] tracking-tight sm:text-5xl">A higher standard, wherever life happens.</h2>
+          </div>
+          <p class="max-w-xl text-base leading-7 text-white/65 lg:justify-self-start">Tailored facility management for places where trust, presentation, and the everyday experience all matter.</p>
+        </div>
+        <div class="mt-10 grid border-y border-white/20 md:grid-cols-3">
+          {site.industries.map((industry, index) => {
+            const Icon = industryIcons[index];
+            return (
+              <article class:list={["group flex min-h-64 flex-col p-8", index < site.industries.length - 1 ? "border-b border-white/20 md:border-r md:border-b-0" : ""]}>
+                <Icon size={32} stroke-width={1.25} aria-hidden="true" class="text-clay" />
+                <div class="mt-8">
+                  <h3 class="font-display text-4xl tracking-tight">{industry.title}</h3>
+                  <div class="mt-4 h-px w-10 bg-white/20 transition-all duration-300 group-hover:w-full group-hover:bg-clay"></div>
+                  <p class="mt-4 max-w-xs text-sm leading-6 text-white/65">{industry.description}</p>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <section class="border-t border-line bg-sand text-ink">
       <div class="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[.85fr_1.15fr] lg:px-8 lg:py-28">
-        <p class="font-display text-5xl leading-none text-clay sm:text-6xl">Care is an operating standard, not an add-on.</p>
+        <p class="font-display text-5xl leading-none sm:text-6xl">Care is an operating standard, not an add-on.</p>
         <div class="max-w-xl lg:pt-3">
-          <p class="text-lg leading-8 text-white/80">From the visible welcome at reception to the systems running quietly in the background, we make each detail feel intentionally managed.</p>
-          <a href="/contact" class="mt-8 inline-flex rounded-full border border-white/40 px-6 py-3.5 font-semibold transition hover:border-white hover:bg-white hover:text-forest">Start a conversation</a>
+          <p class="text-lg leading-8 text-ink/70">From the visible welcome at reception to the systems running quietly in the background, we make each detail feel intentionally managed.</p>
+          <a href="/contact" class="mt-8 inline-flex rounded-full bg-ink px-6 py-3.5 font-semibold text-white transition hover:bg-ink/85">Request a consultation</a>
         </div>
       </div>
     </section>

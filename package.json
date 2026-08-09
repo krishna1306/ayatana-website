@@ -12,6 +12,7 @@
     "publish:website": "node scripts/publish-website.mjs"
   },
   "dependencies": {
+    "@lucide/astro": "^1.30.0",
     "@tailwindcss/vite": "^4.3.2",
     "astro": "^7.1.4",
     "preline": "^4.2.0",

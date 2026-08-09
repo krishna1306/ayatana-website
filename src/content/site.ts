@@ -1,25 +1,39 @@
 export const site = {
   name: "Ayatana",
-  description: "Facility management services designed for dependable, healthier workplaces.",
+  description: "Ayatana: Luxury living. Thoughtfully managed.",
   email: "hello@ayatana.in",
   phone: "+91 80 0000 0000",
   location: "Bengaluru, India",
   navigation: [
     { href: "/", label: "Home" },
-    { href: "/contact", label: "Contact" },
+    { href: "/about", label: "About Ayatana" },
   ],
   services: [
     {
-      title: "Integrated facility management",
-      description: "One accountable team for the daily details that keep your premises dependable.",
+      title: "General staffing",
+      description: "Dependable, well-presented people for the roles that keep your property running with ease.",
     },
     {
-      title: "Workplace operations",
-      description: "Front-of-house, support staffing, and service coordination tuned to your workplace.",
+      title: "Security",
+      description: "Attentive protection, vigilant access control, and a reassuring presence around the clock.",
     },
     {
-      title: "Technical maintenance",
-      description: "Planned maintenance and responsive support to help critical systems stay ready.",
+      title: "Housekeeping",
+      description: "Impeccably maintained environments that feel considered from the first arrival to the last detail.",
+    },
+  ],
+  industries: [
+    {
+      title: "Commercial",
+      description: "Professional environments where people, presentation, and performance must move together.",
+    },
+    {
+      title: "Residential",
+      description: "Elevated daily living, supported by a responsive team that understands the value of home.",
+    },
+    {
+      title: "Hospitality",
+      description: "Guest experiences shaped by quiet precision, thoughtful care, and immaculate standards.",
     },
   ],
 } as const;

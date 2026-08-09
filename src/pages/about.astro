@@ -1,0 +1,65 @@
+---
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const principles = [
+  {
+    title: "Present",
+    description: "A dependable team that understands the rhythms of your property and stays attentive to its day-to-day needs.",
+  },
+  {
+    title: "Considered",
+    description: "Operational details managed with care, from the first welcome to the standards maintained behind the scenes.",
+  },
+  {
+    title: "Consistent",
+    description: "Clear ownership and reliable routines that make every experience feel calm, orderly, and well looked after.",
+  },
+] as const;
+---
+
+<BaseLayout title="About Ayatana | Luxury Living, Thoughtfully Managed" description="Learn about Ayatana's considered approach to facility management.">
+  <Header />
+  <main>
+    <section class="bg-sand">
+      <div class="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-28">
+        <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">About Ayatana</p>
+        <div class="mt-5 grid gap-10 lg:grid-cols-[1fr_.8fr] lg:items-end">
+          <h1 class="max-w-3xl font-display text-5xl leading-[0.98] tracking-tight sm:text-7xl">A higher standard for the places people return to every day.</h1>
+          <p class="max-w-lg text-lg leading-8 text-ink/70">Ayatana brings a considered approach to facility management across commercial, residential, and hospitality environments.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-[.7fr_1.3fr] lg:items-end">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-moss">How we work</p>
+          <h2 class="mt-4 font-display text-4xl leading-[1.02] tracking-tight sm:text-5xl">Thoughtful management is felt in the details.</h2>
+        </div>
+        <p class="max-w-xl text-base leading-7 text-ink/70 lg:justify-self-start">We create confidence through people, clear ownership, and standards that help each space operate with quiet ease.</p>
+      </div>
+      <div class="mt-10 grid border-y border-line md:grid-cols-3">
+        {principles.map((principle, index) => (
+          <article class:list={["p-8 sm:p-10", index < principles.length - 1 ? "border-b border-line md:border-r md:border-b-0" : ""]}>
+            <h3 class="font-display text-4xl tracking-tight">{principle.title}</h3>
+            <div class="mt-5 h-px w-10 bg-line"></div>
+            <p class="mt-4 max-w-xs text-sm leading-6 text-ink/70">{principle.description}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="bg-ink text-white">
+      <div class="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[.85fr_1.15fr] lg:px-8 lg:py-24">
+        <p class="font-display text-5xl leading-none sm:text-6xl">Luxury living. Thoughtfully managed.</p>
+        <div class="max-w-xl lg:pt-2">
+          <p class="text-lg leading-8 text-white/70">Tell us about your property and the experience you want its residents, guests, or teams to have.</p>
+          <a href="/contact" class="mt-8 inline-flex rounded-full bg-cream px-6 py-3.5 font-semibold text-ink transition hover:bg-white">Request a consultation</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>

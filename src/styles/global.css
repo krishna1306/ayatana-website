@@ -4,13 +4,12 @@
 @theme {
   --font-display: "DM Serif Display", Georgia, serif;
   --font-body: "Work Sans", sans-serif;
-  --color-ink: #10211e;
-  --color-forest: #17483c;
-  --color-moss: #567761;
-  --color-sand: #f3efe6;
-  --color-cream: #fbfaf6;
-  --color-clay: #d4a269;
-  --color-line: #d7d8d0;
+  --color-ink: #262221;
+  --color-moss: #a7a19a;
+  --color-sand: #f4f1ea;
+  --color-cream: #f4f1ea;
+  --color-clay: #b9874d;
+  --color-line: #d5d0c8;
 }
 
 @layer base {
@@ -26,6 +25,6 @@
   button,
   input,
   textarea {
-    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-forest;
+    @apply focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink;
   }
 }

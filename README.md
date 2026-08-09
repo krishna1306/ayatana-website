@@ -88,7 +88,11 @@ npm run publish:website -- --message="Publish updated website"
 
 Never edit `website` directly or merge it back into `main`.
 
-Configure the host to serve the `website` branch root. For GitHub Pages, select **Deploy from a branch**, then choose branch `website` and folder `/(root)`. If the production site is under a repository subpath rather than a custom domain, set Astro's `site` and `base` options in `astro.config.mjs` before publishing. The current configuration is appropriate for a custom domain or a branch-root deployment.
+Hostinger serves the generated static assets from the `website` branch. GitHub
+Actions only builds and updates that branch; GitHub Pages is not part of this
+deployment. The current root-relative asset paths assume Hostinger serves the
+site at the domain root. If that hosting path changes, update Astro's `site`
+and `base` options before publishing.
 
 ## Content and design maintenance
 
