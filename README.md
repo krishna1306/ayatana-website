@@ -88,6 +88,12 @@ The editable source is on `main`; the generated static site is on the existing `
 
 When you push to `main`, GitHub Actions now runs the publish workflow automatically: it installs dependencies, runs `npm run check`, builds the site, updates `website`, and pushes `website` to `origin`.
 
+Before relying on the workflow, configure `PUBLIC_API_URL` in GitHub repository settings as either:
+- a repository variable named `PUBLIC_API_URL` (preferred, since it is not a secret), or
+- a repository secret named `PUBLIC_API_URL`.
+
+If neither is configured, the workflow fails fast with a clear error instead of publishing a broken contact form.
+
 To publish manually from your machine (for example, to verify locally before automation), run:
 
 ```bash
